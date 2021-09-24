@@ -6,6 +6,11 @@ from distributed.client import default_client
 
 from dask_sql.input_utils.base import BaseInputPlugin
 
+try:
+    import dask_cudf
+except ImportError:  # pragma: no cover
+    dask_cudf = None
+
 
 class LocationInputPlugin(BaseInputPlugin):
     """Input Plugin for everything, which can be read in from a file (on disk, remote etc.)"""
@@ -26,7 +31,12 @@ class LocationInputPlugin(BaseInputPlugin):
 
         if format == "memory":
             client = default_client()
-            return client.get_dataset(input_item, **kwargs)
+            df = client.get_dataset(input_item, **kwargs)
+
+            if gpu and dask_cudf and not isinstance(df, dask_cudf.DataFrame):
+                return dask_cudf.from_dask_dataframe(df)
+
+            return df
 
         if not format:
             _, extension = os.path.splitext(input_item)
@@ -34,9 +44,7 @@ class LocationInputPlugin(BaseInputPlugin):
             format = extension.lstrip(".")
 
         try:
-            if gpu:  # pragma: no cover
-                import dask_cudf
-
+            if gpu and dask_cudf:  # pragma: no cover
                 read_function = getattr(dask_cudf, f"read_{format}")
             else:
                 read_function = getattr(dd, f"read_{format}")
