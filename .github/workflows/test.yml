@@ -131,11 +131,11 @@ jobs:
           path: junit/test-results.xml
         # Use always() to always run this step to publish test results when there are test failures
         if: ${{ always() }}
-      - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v2
-        with:
-          fail_ci_if_error: true
-          token: ${{ secrets.CODECOV_TOKEN }}
+      # - name: Upload coverage to Codecov
+      #   uses: codecov/codecov-action@v2
+      #   with:
+      #     fail_ci_if_error: true
+      #     token: ${{ secrets.CODECOV_TOKEN }}
   test_independent:
     name: "Test in a dask cluster"
     needs: build
