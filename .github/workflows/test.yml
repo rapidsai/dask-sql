@@ -6,7 +6,7 @@ name: Test
 on:
   push:
     branches:
-      - main
+      - branch-21.12
   pull_request:
 
 jobs:
