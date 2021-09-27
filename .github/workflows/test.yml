@@ -99,6 +99,7 @@ jobs:
           # explicitly install docker, fugue and other packages
           mamba install \
             sqlalchemy>=1.4.23 \
+            sasl>=0.3.1 \
             pyhive>=0.6.4 \
             psycopg2>=2.9.1 \
             ciso8601>=2.2.0 \
