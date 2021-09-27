@@ -6,8 +6,14 @@ name: Test
 on:
   push:
     branches:
-      - main
+      - branch-21.12
   pull_request:
+
+# When this workflow is queued, automatically cancel any previous running
+# or pending jobs from the same branch
+concurrency:
+  group: test-${{ github.head_ref }}
+  cancel-in-progress: true
 
 jobs:
   build:
@@ -93,6 +99,7 @@ jobs:
           # explicitly install docker, fugue and other packages
           mamba install \
             sqlalchemy>=1.4.23 \
+            sasl>=0.3.1 \
             pyhive>=0.6.4 \
             psycopg2>=2.9.1 \
             ciso8601>=2.2.0 \
@@ -125,11 +132,11 @@ jobs:
           path: junit/test-results.xml
         # Use always() to always run this step to publish test results when there are test failures
         if: ${{ always() }}
-      - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v2
-        with:
-          fail_ci_if_error: true
-          token: ${{ secrets.CODECOV_TOKEN }}
+      # - name: Upload coverage to Codecov
+      #   uses: codecov/codecov-action@v2
+      #   with:
+      #     fail_ci_if_error: true
+      #     token: ${{ secrets.CODECOV_TOKEN }}
   test_independent:
     name: "Test in a dask cluster"
     needs: build
