@@ -5,7 +5,7 @@ on: [pull_request]
 # When this workflow is queued, automatically cancel any previous running
 # or pending jobs from the same branch
 concurrency:
-  group: ${{ github.ref }}
+  group: style-${{ github.head_ref }}
   cancel-in-progress: true
 
 jobs:
