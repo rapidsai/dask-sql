@@ -435,10 +435,11 @@ class Context:
             )
             dc = DataContainer(dc.df, cc)
 
+        df = dc.assign()
         if not return_futures:
-            df = dc.df.compute()
+            df = df.compute()
 
-        return dc.df
+        return df
 
     def explain(
         self, sql: str, dataframes: Dict[str, Union[dd.DataFrame, pd.DataFrame]] = None

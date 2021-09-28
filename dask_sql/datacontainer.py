@@ -171,9 +171,9 @@ class DataContainer:
         a dataframe which has the the columns specified in the
         stored ColumnContainer.
         """
-        df = self.df.assign(
-            **{
-                col_from: self.df[col_to]
+        df = self.df.rename(
+            columns={
+                col_to: col_from
                 for col_from, col_to in self.column_container.mapping()
                 if col_from in self.column_container.columns
             }
