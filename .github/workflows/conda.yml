@@ -2,7 +2,7 @@ name: Build conda nightly
 on:
   push:
     branches:
-      - main
+      - branch-22.02
   pull_request:
 
 # When this workflow is queued, automatically cancel any previous running
