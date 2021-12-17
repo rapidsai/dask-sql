@@ -48,8 +48,8 @@ jobs:
       - name: Upload conda package
         if: |
           github.event_name == 'push'
-          && github.ref == 'refs/heads/main'
-          && github.repository == 'dask-contrib/dask-sql'
+          && github.ref == 'refs/heads/branch-22.02'
+          && github.repository == 'rapidsai/dask-sql'
         env:
           ANACONDA_API_TOKEN: ${{ secrets.CONDA_RAPIDSAI_NIGHTLY_TOKEN }}
         run: |
