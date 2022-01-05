@@ -6,7 +6,7 @@ name: Test Python package
 on:
   push:
     branches:
-      - main
+      - branch-**
   pull_request:
 
 # When this workflow is queued, automatically cancel any previous running
@@ -24,7 +24,6 @@ jobs:
   detect-ci-trigger:
     name: Check for upstream trigger phrase
     runs-on: ubuntu-latest
-    if: github.repository == 'dask-contrib/dask-sql'
     outputs:
       triggered: ${{ steps.detect-trigger.outputs.trigger-found }}
     steps:
