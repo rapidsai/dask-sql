@@ -24,7 +24,6 @@ jobs:
   detect-ci-trigger:
     name: Check for upstream trigger phrase
     runs-on: ubuntu-latest
-    if: github.repository == 'rapidsai/dask-sql'
     outputs:
       triggered: ${{ steps.detect-trigger.outputs.trigger-found }}
     steps:
